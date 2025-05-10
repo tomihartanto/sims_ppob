@@ -127,7 +127,12 @@ exports.getProfile = async (req, res) => {
         return res.status(200).json({
             status: 0,
             message: 'Sukses',
-            data: userData,
+            data: {
+                "email": userData.email,
+                "first_name": userData.first_name,
+                "last_name": userData.last_name,
+                "profile_image": userData.profile_image
+            },
         });
 
     } catch (error) {

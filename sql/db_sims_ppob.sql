@@ -11,7 +11,7 @@
  Target Server Version : 80042 (8.0.42)
  File Encoding         : 65001
 
- Date: 10/05/2025 19:05:13
+ Date: 10/05/2025 21:33:20
 */
 
 SET NAMES utf8mb4;
@@ -78,6 +78,7 @@ CREATE TABLE `tb_transactions`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `invoice_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `user_id` int NULL DEFAULT NULL,
+  `service_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `transaction_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `total_amount` int NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -86,15 +87,11 @@ CREATE TABLE `tb_transactions`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `tb_users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_transactions
 -- ----------------------------
-INSERT INTO `tb_transactions` VALUES (1, 'INV20250510-837', 1, 'TOPUP', 1000000, 'Top up balance', '2025-05-10 18:53:20', 1);
-INSERT INTO `tb_transactions` VALUES (2, 'INV20250510-873', 1, 'PAYMENT', 40000, 'Pembelian PULSA', '2025-05-10 18:54:49', 1);
-INSERT INTO `tb_transactions` VALUES (3, 'INV20250510-717', 1, 'PAYMENT', 50000, 'Pembelian PGN', '2025-05-10 18:55:25', 1);
-INSERT INTO `tb_transactions` VALUES (4, 'INV20250510-158', 1, 'PAYMENT', 40000, 'Pembelian Pajak PBB', '2025-05-10 18:57:49', 1);
 
 -- ----------------------------
 -- Table structure for tb_users
@@ -117,6 +114,6 @@ CREATE TABLE `tb_users`  (
 -- ----------------------------
 -- Records of tb_users
 -- ----------------------------
-INSERT INTO `tb_users` VALUES (1, 'tomihartanto@example.com', 'Tomi', 'Hartanto', '$2b$10$kERIKVj7oqgjPDrS2VrAcuWcUVhxDIeTiSvI45yKxmw3i6gtpCSs.', NULL, 830000, '2025-05-10 18:50:23', 1);
+INSERT INTO `tb_users` VALUES (1, 'tomihartanto@example.com', 'Tomi', 'Hartanto', '$2b$10$yTaGYJhotccBOvxKZVd/nOGWt3pgf.tps0b3hgQuBtTJzL42qsFO6', NULL, 0, '2025-05-10 21:31:06', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -5,28 +5,35 @@ const {
 
 exports.insertTransaction = async ({
     user_id,
+    service_code,
     transaction_type,
     amount,
     description,
     status
 }) => {
 
-    const invoice_number = generateInvoiceNumber(); // Buat invoice unik
-    const created_on = new Date(); // Waktu transaksi
+    try {
+        const invoice_number = generateInvoiceNumber(); // Buat invoice unik
+        const created_on = new Date().toISOString().slice(0, 19).replace('T', ' '); // Format MySQL DATETIME
 
-    const [result] = await db.execute(
-        `INSERT INTO tb_transactions 
-        (user_id, invoice_number, transaction_type, total_amount, description, status, created_date) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)`,
-        [user_id, invoice_number, transaction_type, amount, description, status, created_on]
-    );
+        const [result] = await db.execute(
+            `INSERT INTO tb_transactions 
+        (user_id, invoice_number, service_code, transaction_type, total_amount, description, status, created_date) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            [user_id, invoice_number, service_code, transaction_type, amount, description, status, created_on]
+        );
 
-    return {
-        invoice_number,
-        transaction_type,
-        total_amount: amount,
-        created_on: created_on.toISOString()
-    };
+        return {
+            service_code,
+            invoice_number,
+            transaction_type,
+            total_amount: amount,
+            created_on
+        };
+    } catch (err) {
+        console.error('Gagal menyimpan transaksi:', err.message);
+        throw err; // atau kirimkan response error ke client jika dalam controller
+    }
 };
 
 exports.getTransactionHistory = async (userId, limit, offset) => {

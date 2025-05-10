@@ -14,6 +14,7 @@ exports.topUp = async (req, res) => {
     const amount = req.body.top_up_amount; // Ambil amount dari body request
     const email = req.user.email; // dari payload JWT
     const transaction_type = 'TOPUP';
+    const service_code = 'TOPUP';
 
     // Validasi amount
     if (isNaN(amount) || Number(amount) < 0) {
@@ -35,6 +36,7 @@ exports.topUp = async (req, res) => {
         // Insert transaksi top-up ke tb_transactions
         const transactionData = await transactionModel.insertTransaction({
             user_id: userId,
+            service_code: service_code,
             transaction_type: transaction_type,
             amount: amount,
             description: 'Top up balance',
@@ -97,12 +99,12 @@ exports.transaction = async (req, res) => {
         // Insert transaksi top-up ke tb_transactions
         const transactionData = await transactionModel.insertTransaction({
             user_id: userId,
+            service_code: service_code,
             transaction_type: transaction_type,
             amount: total_amount,
             description: 'Pembelian ' + getServices.service_name,
             status: 1 // atau sesuai skema enum/status kamu
         });
-
 
         res.status(200).json({
             status: 0,
@@ -112,7 +114,7 @@ exports.transaction = async (req, res) => {
                 "service_code": service_code,
                 "service_name": getServices.service_name,
                 "transaction_type": transactionData.transaction_type,
-                "amount": transactionData.amount,
+                "amount": transactionData.total_amount,
                 "created_on": transactionData.created_on
             }
         });
