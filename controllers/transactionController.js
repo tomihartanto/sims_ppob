@@ -71,7 +71,7 @@ exports.transaction = async (req, res) => {
     if (!getServices) {
         return res.status(200).json({
             status: 102,
-            message: 'Service ataus Layanan tidak ditemukan',
+            message: 'Service atas Layanan tidak ditemukan',
             data: null
         });
     }
